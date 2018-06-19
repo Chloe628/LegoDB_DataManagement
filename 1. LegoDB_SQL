@@ -1,0 +1,69 @@
+
+1. categories
+select distinct pc.name
+from part_categories as pc;
+
+
+2. 
+select distinct pc.name
+from part_categories as pc;
+
+
+3. Queries about Rock category
+select p.name 
+from parts as p, part_categories as pc
+where pc.id = p.part_cat_id and pc.id = 33; 
+
+select id
+from part_categories
+where name="Rock";
+
+
+4. Color_trans
+select is_trans, count(rgb)
+from colors
+group by is_trans;
+
+
+5. Using count, group by and order by functions
+select set_num, count(*) as c 
+from inventories
+group by set_num having c > 1
+order by c desc;
+
+
+6. Using Join
+SELECT t.id as theme_id, s.name as set_name
+FROM sets as s
+INNER JOIN themes as t ON t.id = s.theme_id;
+
+
+7. Showing the sets that have been uploaded
+select distinct s.name, t.name
+from inventories as i , sets as s, themes as t
+where i.set_num = s.set_num and s.theme_id = t.id and i.version != 1;
+
+
+8.
+SELECT DISTINCT t.name, s.year
+FROM sets as s, themes as t
+WHERE s.theme_id = t.id and year in (SELECT min(year) 
+                                      FROM sets);
+
+
+9. The most used and less used color
+select c.id, c.name, i.quantity
+from colors as c, inventory_parts as i
+where c.id = i.color_id and i.quantity in (select max(quantity) 
+                                            from inventory_parts);
+                                            
+select c.id, c.name, i.quantity
+from colors as c, inventory_parts as i
+where c.id = i.color_id and i.quantity in (select min(quantity) 
+                                            from inventory_parts);
+
+
+10. Is_spare  ( this particular query required to much time, so we didn't submit in first presentation,since we then solved in the second hw)
+select is_spare, count(*)
+from inventory_parts
+group by is_spare;
